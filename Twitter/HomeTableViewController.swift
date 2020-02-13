@@ -21,6 +21,8 @@ class HomeTableViewController: UITableViewController {
         loadTweet()
         myRefreshControl.addTarget(self, action: #selector(loadTweet), for: .valueChanged)
         tableView.refreshControl = myRefreshControl
+        self.tableView.rowHeight = UITableView.automaticDimension
+        self.tableView.estimatedRowHeight = 150
     
     }
 
@@ -44,7 +46,7 @@ class HomeTableViewController: UITableViewController {
             self.myRefreshControl.endRefreshing()
             
         }, failure: { (Error) in
-            print("Could not retrieve tweet oh no!!")
+           "print(Error.localizedDescription)"
         })
         
         
@@ -73,7 +75,9 @@ class HomeTableViewController: UITableViewController {
         if let imageData = data {
             cell.ProfileImageView.image = UIImage(data:imageData)
         }
-        
+        cell.setFavorite(tweeArray[indexPath.row]["favorited"] as! Bool)
+        cell.tweetId = tweeArray[indexPath.row]["id"] as! Int
+        cell.setreTweeted (tweeArray[indexPath.row]["retweeted"] as! Bool)
         return cell
     }
     // MARK: - Table view data source
